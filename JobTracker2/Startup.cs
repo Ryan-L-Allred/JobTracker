@@ -1,6 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using JobTracker2.Repositories;
 
 namespace JobTracker
 {
@@ -17,6 +18,8 @@ namespace JobTracker
         {
             //services.AddDbContext...
             //services.AddControllersWithViews();
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
             services
