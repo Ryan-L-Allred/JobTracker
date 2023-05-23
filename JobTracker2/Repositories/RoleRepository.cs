@@ -74,5 +74,68 @@ namespace JobTracker2.Repositories
                 }
             }    
         }
+
+        public Role GetRoleById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                          SELECT r.Id, r.Title, r.Company, r.Location, r.Skills, r.IsRejected, r.IsAccepted, r.GotInterview, r.ExperienceLevelId, r.JobTypeId, r.JobSiteId, r.UserProfileId,
+	                             el.Name as ExpLevelName,
+	                             jt.Name as JobTypeName,
+	                             js.Name as JobSiteName
+                            FROM Role r
+                            JOIN ExperienceLevel el ON r.ExperienceLevelId = el.Id
+                            JOIN JobType jt ON r.JobTypeId = jt.Id
+                            JOIN JobSite js ON r.JobSiteId = js.Id
+                           WHERE r.Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        Role role = null;
+                        if (reader.Read())
+                        {
+                            role = new Role()
+                            {
+                                Id = id,
+                                Title = DbUtils.GetString(reader, "Title"),
+                                Company = DbUtils.GetString(reader, "Company"),
+                                Location = DbUtils.GetString(reader, "Location"),
+                                Skills = DbUtils.GetString(reader, "Skills"),
+                                IsRejected = reader.GetBoolean(reader.GetOrdinal("IsRejected")),
+                                IsAccepted = reader.GetBoolean(reader.GetOrdinal("IsAccepted")),
+                                GotInterview = reader.GetBoolean(reader.GetOrdinal("GotInterview")),
+                                ExperienceLevelId = DbUtils.GetInt(reader, "ExperienceLevelId"),
+                                ExperienceLevel = new ExperienceLevel()
+                                {
+                                    Id = DbUtils.GetInt(reader, "ExperienceLevelId"),
+                                    Name = DbUtils.GetString(reader, "ExpLevelName"),
+                                },
+                                JobTypeId = DbUtils.GetInt(reader, "JobTypeId"),
+                                JobType = new JobType()
+                                {
+                                    Id = DbUtils.GetInt(reader, "JobTypeId"),
+                                    Name = DbUtils.GetString(reader, "JobTypeName")
+                                },
+                                JobSiteId = DbUtils.GetInt(reader, "JobSiteId"),
+                                JobSite = new JobSite()
+                                {
+                                    Id = DbUtils.GetInt(reader, "JobSiteId"),
+                                    Name = DbUtils.GetString(reader, "JobSiteName")
+                                },
+                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId")
+                            };
+                        }
+
+                        return role;
+                    }
+                }
+            }
+        }
     }
 }

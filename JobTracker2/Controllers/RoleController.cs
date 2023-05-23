@@ -22,5 +22,16 @@ namespace JobTracker2.Controllers
         {
             return Ok(_roleRepo.GetAllRoles());
         }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var role = _roleRepo.GetRoleById(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+            return Ok(role);
+        }
     }
 }
