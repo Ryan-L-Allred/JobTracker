@@ -1,11 +1,10 @@
-﻿namespace JobTracker.Models
+﻿namespace JobTracker2.Models
 {
     public class Role
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public int CompanyId { get; set; }
-        public Company Company { get; set; }
+        public string Company { get; set; }
         public string Location { get; set; }
         public string Skills { get; set; }
         public bool IsRejected { get; set; }
