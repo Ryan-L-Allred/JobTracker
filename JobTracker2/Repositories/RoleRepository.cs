@@ -45,16 +45,31 @@ namespace JobTracker2.Repositories
                                 Skills = DbUtils.GetString(reader, "Skills"),
                                 IsRejected = reader.GetBoolean(reader.GetOrdinal("IsRejected")),
                                 IsAccepted = reader.GetBoolean(reader.GetOrdinal("IsAccepted")),
+                                GotInterview = reader.GetBoolean(reader.GetOrdinal("GotInterview")),
                                 ExperienceLevelId = DbUtils.GetInt(reader, "ExperienceLevelId"),
                                 ExperienceLevel = new ExperienceLevel()
                                 {
                                     Id = DbUtils.GetInt(reader, "ExperienceLevelId"),
                                     Name = DbUtils.GetString(reader, "ExpLevelName"),
-                                }
-
+                                },
+                                JobTypeId = DbUtils.GetInt(reader, "JobTypeId"),
+                                JobType = new JobType()
+                                {
+                                    Id = DbUtils.GetInt(reader, "JobTypeId"),
+                                    Name = DbUtils.GetString(reader, "JobTypeName")
+                                },
+                                JobSiteId = DbUtils.GetInt(reader, "JobSiteId"),
+                                JobSite = new JobSite()
+                                {
+                                    Id = DbUtils.GetInt(reader, "JobSiteId"),
+                                    Name = DbUtils.GetString(reader, "JobSiteName")
+                                },
+                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId")
                             });
 
                         }
+
+                        return roles;
                     }
                 }
             }    
