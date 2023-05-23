@@ -1,4 +1,4 @@
-﻿namespace JobTracker.Models
+﻿namespace JobTracker2.Models
 {
     public class JobSite
     {
