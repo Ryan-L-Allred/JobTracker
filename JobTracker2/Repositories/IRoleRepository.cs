@@ -5,5 +5,6 @@ namespace JobTracker2.Repositories
     public interface IRoleRepository
     {
         List<Role> GetAllRoles();
+        Role GetRoleById(int id);
     }
 }
