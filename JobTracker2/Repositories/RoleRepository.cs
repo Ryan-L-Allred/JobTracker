@@ -29,7 +29,7 @@ namespace JobTracker2.Repositories
                          JOIN ExperienceLevel el ON r.ExperienceLevelId = el.Id
                          JOIN JobType jt ON r.JobTypeId = jt.Id
                          JOIN JobSite js ON r.JobSiteId = js.Id
-                     ORDER BY Title";
+                     ";
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -134,6 +134,35 @@ namespace JobTracker2.Repositories
 
                         return role;
                     }
+                }
+            }
+        }
+        
+        public void AddRole(Role role)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO Role (Title, Company, Location, Skills, IsRejected, IsAccepted, GotInterview, ExperienceLevelId, JobTypeId, JobSiteId, UserProfileId)
+                        OUTPUT INSERTED.ID
+                        VALUES (@Title, @Company, @Location, @Skills, @IsRejected, @IsAccepted, @GotInterview, @ExperienceLevelId, @JobTypeId, @JobSiteId, @UserProfileId)";
+
+                    DbUtils.AddParameter(cmd, "@Title", role.Title);
+                    DbUtils.AddParameter(cmd, "@Company", role.Company);
+                    DbUtils.AddParameter(cmd, "@Location", role.Location);
+                    DbUtils.AddParameter(cmd, "@Skills", role.Skills);
+                    DbUtils.AddParameter(cmd, "@IsRejected", role.IsRejected);
+                    DbUtils.AddParameter(cmd, "@IsAccepted", role.IsAccepted);
+                    DbUtils.AddParameter(cmd, "@GotInterview", role.GotInterview);
+                    DbUtils.AddParameter(cmd, "@ExperienceLevelId", role.ExperienceLevelId);
+                    DbUtils.AddParameter(cmd, "@JobTypeId", role.JobTypeId);
+                    DbUtils.AddParameter(cmd, "@JobSiteId", role.JobSiteId);
+                    DbUtils.AddParameter(cmd, "@UserProfileId", role.UserProfileId);
+
+                    role.Id = (int)cmd.ExecuteScalar();
                 }
             }
         }

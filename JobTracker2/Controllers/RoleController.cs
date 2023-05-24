@@ -1,6 +1,7 @@
 ﻿using JobTracker2.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using JobTracker2.Models;
 
 namespace JobTracker2.Controllers
 {
@@ -32,6 +33,13 @@ namespace JobTracker2.Controllers
                 return NotFound();
             }
             return Ok(role);
+        }
+
+        [HttpPost]
+        public IActionResult Post(Role role)
+        {
+            _roleRepo.AddRole(role);
+            return CreatedAtAction("Get", new { id = role.Id }, role);
         }
     }
 }
