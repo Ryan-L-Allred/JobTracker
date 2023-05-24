@@ -6,5 +6,6 @@ namespace JobTracker2.Repositories
     {
         List<Role> GetAllRoles();
         Role GetRoleById(int id);
+        void AddRole(Role role);
     }
 }
