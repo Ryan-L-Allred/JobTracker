@@ -20,6 +20,7 @@ namespace JobTracker
             //services.AddControllersWithViews();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IRoleRepository, RoleRepository>();
+            services.AddTransient<IPropertyRepository, PropertyRepository>();
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
