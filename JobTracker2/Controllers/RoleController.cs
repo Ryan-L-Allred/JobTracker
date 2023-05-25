@@ -53,5 +53,12 @@ namespace JobTracker2.Controllers
             _roleRepo.UpdateRole(role);
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _roleRepo.DeleteRole(id);
+            return NoContent();
+        }
     }
 }

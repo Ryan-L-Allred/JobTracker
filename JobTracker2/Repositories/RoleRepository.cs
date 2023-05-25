@@ -206,5 +206,19 @@ namespace JobTracker2.Repositories
                 }
             }
         }
+
+        public void DeleteRole(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Role WHERE Id = @id";
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
