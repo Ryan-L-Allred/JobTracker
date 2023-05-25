@@ -166,5 +166,45 @@ namespace JobTracker2.Repositories
                 }
             }
         }
+
+        public void UpdateRole(Role role)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        UPDATE Role
+                           SET Title = @Title,
+                               Company = @Company,
+                               Location = @Location,
+                               Skills = @Skills,
+                               IsRejected = @IsRejected,
+                               IsAccepted = @IsAccepted,
+                               GotInterview = @GotInterview,
+                               ExperienceLevelId = @ExperienceLevelId,
+                               JobTypeId = @JobTypeId,
+                               JobSiteId = @JobSiteId,
+                               UserProfileId = @UserProfileId
+                         WHERE Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@Title", role.Title);
+                    DbUtils.AddParameter(cmd, "@Company", role.Company);
+                    DbUtils.AddParameter(cmd, "@Location", role.Location);
+                    DbUtils.AddParameter(cmd, "@Skills", role.Skills);
+                    DbUtils.AddParameter(cmd, "@IsRejected", role.IsRejected);
+                    DbUtils.AddParameter(cmd, "@IsAccepted", role.IsAccepted);
+                    DbUtils.AddParameter(cmd, "@GotInterview", role.GotInterview);
+                    DbUtils.AddParameter(cmd, "@ExperienceLevelId", role.ExperienceLevelId);
+                    DbUtils.AddParameter(cmd, "@JobTypeId", role.JobTypeId);
+                    DbUtils.AddParameter(cmd, "@JobSiteId", role.JobSiteId);
+                    DbUtils.AddParameter(cmd, "@UserProfileId", role.UserProfileId);
+                    DbUtils.AddParameter(cmd, "@Id", role.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
