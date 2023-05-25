@@ -41,5 +41,17 @@ namespace JobTracker2.Controllers
             _roleRepo.AddRole(role);
             return CreatedAtAction("Get", new { id = role.Id }, role);
         }
+
+        [HttpPut]
+        public IActionResult Put(int id, Role role)
+        {
+            if (id != role.Id)
+            {
+                return BadRequest();
+            }
+
+            _roleRepo.UpdateRole(role);
+            return NoContent();
+        }
     }
 }
