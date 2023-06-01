@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
-import Hello from "./Hello";
+import RoleList from "./RoleList";
 
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -10,6 +10,9 @@ export default function ApplicationViews({ isLoggedIn }) {
     <main>
       <Routes>
         <Route path="/">
+          <Route path="roles">
+            <Route index element={<RoleList/>} />
+          </Route>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="*" element={<p>Whoops, nothing here...</p>} />
