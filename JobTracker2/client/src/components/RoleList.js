@@ -20,7 +20,9 @@ const RoleList = () => {
             <h2>Roles Applied</h2>
             {roles.map(role => (
                 <section key={role.id} class="text-center">
+                    <Link to={`/roles/${role.id}`}>
                     <div class="roleList"><b>Title:</b> {role.title}, <b>Company:</b> {role.company}</div>
+                    </Link>
                 </section>
             ))}
         </section>
