@@ -1,0 +1,27 @@
+.mr-auto {
+    
+    font-family: 'Permanent Marker';
+    font-size: 30px;
+    color: white;
+}
+
+.app_Name {
+    font-family: 'Permanent Marker';
+    font-size: 30px;
+
+    
+}
+
+.login {
+    font-family: 'Permanent Marker';
+    font-size: 30px;
+    color: aliceblue
+}
+
+/* div {
+    background-color: purple;
+} */
+
+.Home {
+    color: yellow;
+}
