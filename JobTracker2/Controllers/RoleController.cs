@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using JobTracker2.Models;
+using System.Security.Claims;
 
 namespace JobTracker2.Controllers
 {
@@ -38,6 +39,10 @@ namespace JobTracker2.Controllers
         [HttpPost]
         public IActionResult Post(Role role)
         {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userProfile = _userProfileRepo.GetByFirebaseUserId(firebaseUserId);
+
+            role.UserProfileId = userProfile.Id;
             _roleRepo.AddRole(role);
             return CreatedAtAction("Get", new { id = role.Id }, role);
         }

@@ -18,6 +18,9 @@ const RoleList = () => {
     return (
         <section>
             <h2>Roles Applied</h2>
+                <div class="col-md-12 text-center">
+                    <button class="btn-xl" onClick={() => navigate("/roles/add")}>Add Role </button>
+                </div>
             {roles.map(role => (
                 <section key={role.id} class="text-center">
                     <Link to={`/roles/${role.id}`}>
