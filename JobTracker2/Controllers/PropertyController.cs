@@ -16,19 +16,19 @@ namespace JobTracker2.Controllers
             _propertyRepo = propertyRepo;
         }
 
-        [HttpGet("ExpLevels")]
+        [HttpGet("ExpLevel")]
         public IActionResult GetExpLevels()
         {
             return Ok(_propertyRepo.GetAllExpLevels());
         }
 
-        [HttpGet("JobTypes")]
+        [HttpGet("JobType")]
         public IActionResult GetJobTypes()
         {
             return Ok(_propertyRepo.GetAllJobTypes());
         }
 
-        [HttpGet("JobSites")]
+        [HttpGet("JobSite")]
         public IActionResult GetJobSites()
         {
             return Ok(_propertyRepo.GetAllJobSites());
