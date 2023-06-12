@@ -44,9 +44,9 @@ set identity_insert [ExperienceLevel] off
 --set identity_insert [Company] off
 
 set identity_insert [Role] on
-insert into [Role] (Id, Title, Company, [Location], Skills, IsRejected, IsAccepted, GotInterview, ExperienceLevelId, JobTypeId, JobSiteId, UserProfileId) values (1, 'Technical Resident', 'HCA Healthcare', 'Nashville, TN', 'Tech', 0, 0, 1, 2, 1, 1, 2); 
-insert into [Role] (Id, Title, Company, [Location], Skills, IsRejected, IsAccepted, GotInterview, ExperienceLevelId, JobTypeId, JobSiteId, UserProfileId) values (2, 'Software Developer in Test', 'Healthcare Bluebook', 'Brentwood, TN', 'Cypress', 0, 0, 0, 2, 1, 3, 2);
-insert into [Role] (Id, Title, Company, [Location], Skills, IsRejected, IsAccepted, GotInterview, ExperienceLevelId, JobTypeId, JobSiteId, UserProfileId) values (3, 'Software Developer', 'U-Haul', 'Phoenix, AZ', 'C#', 1, 0, 1, 3, 1, 3, 2);
-insert into [Role] (Id, Title, Company, [Location], Skills, IsRejected, IsAccepted, GotInterview, ExperienceLevelId, JobTypeId, JobSiteId, UserProfileId) values (4, 'Associate Software Integration Programmer', 'MeridianLink' , 'Costa Mesa, CA', 'KQL', 0, 0, 1, 2, 1, 3, 2);
-insert into [Role] (Id, Title, Company, [Location], Skills, IsRejected, IsAccepted, GotInterview, ExperienceLevelId, JobTypeId, JobSiteId, UserProfileId) values (5, '.NET API Developer', 'National General', 'Nashville, TN', '.NET', 1, 0, 0, 3, 1, 3, 2);
+insert into [Role] (Id, Title, Company, [Location], Skills, IsRejected, IsAccepted, GotInterview, ExperienceLevelId, JobTypeId, JobSiteId, UserProfileId) values (1, 'Technical Resident', 'HCA Healthcare', 'Nashville, TN', 'Tech', 'No', 'No', 'Yes', 2, 1, 1, 2); 
+insert into [Role] (Id, Title, Company, [Location], Skills, IsRejected, IsAccepted, GotInterview, ExperienceLevelId, JobTypeId, JobSiteId, UserProfileId) values (2, 'Software Developer in Test', 'Healthcare Bluebook', 'Brentwood, TN', 'Cypress', 'Ghosted', 'Ghosted', 'Ghosted', 2, 1, 3, 2);
+insert into [Role] (Id, Title, Company, [Location], Skills, IsRejected, IsAccepted, GotInterview, ExperienceLevelId, JobTypeId, JobSiteId, UserProfileId) values (3, 'Software Developer', 'U-Haul', 'Phoenix, AZ', 'C#', 'Yes', 'No', 'Yes', 3, 1, 3, 2);
+insert into [Role] (Id, Title, Company, [Location], Skills, IsRejected, IsAccepted, GotInterview, ExperienceLevelId, JobTypeId, JobSiteId, UserProfileId) values (4, 'Associate Software Integration Programmer', 'MeridianLink' , 'Costa Mesa, CA', 'KQL', 'No', 'No', 'Yes', 2, 1, 3, 2);
+insert into [Role] (Id, Title, Company, [Location], Skills, IsRejected, IsAccepted, GotInterview, ExperienceLevelId, JobTypeId, JobSiteId, UserProfileId) values (5, '.NET API Developer', 'National General', 'Nashville, TN', '.NET', 'Yes', 'No', 'No', 3, 1, 3, 2);
 set identity_insert [Role] off
