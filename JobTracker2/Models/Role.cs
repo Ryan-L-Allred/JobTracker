@@ -7,9 +7,9 @@
         public string Company { get; set; }
         public string Location { get; set; }
         public string Skills { get; set; }
-        public bool IsRejected { get; set; }
-        public bool IsAccepted { get; set; }
-        public bool GotInterview { get; set; }
+        public string IsRejected { get; set; }
+        public string IsAccepted { get; set; }
+        public string GotInterview { get; set; }
         public int ExperienceLevelId { get; set; }
         public ExperienceLevel ExperienceLevel { get; set; }
         public int JobTypeId { get; set; }

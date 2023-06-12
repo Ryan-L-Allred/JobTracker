@@ -43,9 +43,9 @@ namespace JobTracker2.Repositories
                                 Company = DbUtils.GetString(reader, "Company"),
                                 Location = DbUtils.GetString(reader, "Location"),
                                 Skills = DbUtils.GetString(reader, "Skills"),
-                                IsRejected = reader.GetBoolean(reader.GetOrdinal("IsRejected")),
-                                IsAccepted = reader.GetBoolean(reader.GetOrdinal("IsAccepted")),
-                                GotInterview = reader.GetBoolean(reader.GetOrdinal("GotInterview")),
+                                IsRejected = DbUtils.GetString(reader, "IsRejected"),
+                                IsAccepted = DbUtils.GetString(reader, "IsAccepted"),
+                                GotInterview = DbUtils.GetString(reader, "GotInterview"),
                                 ExperienceLevelId = DbUtils.GetInt(reader, "ExperienceLevelId"),
                                 ExperienceLevel = new ExperienceLevel()
                                 {
@@ -107,9 +107,9 @@ namespace JobTracker2.Repositories
                                 Company = DbUtils.GetString(reader, "Company"),
                                 Location = DbUtils.GetString(reader, "Location"),
                                 Skills = DbUtils.GetString(reader, "Skills"),
-                                IsRejected = reader.GetBoolean(reader.GetOrdinal("IsRejected")),
-                                IsAccepted = reader.GetBoolean(reader.GetOrdinal("IsAccepted")),
-                                GotInterview = reader.GetBoolean(reader.GetOrdinal("GotInterview")),
+                                IsRejected = DbUtils.GetString(reader, "IsRejected"),
+                                IsAccepted = DbUtils.GetString(reader, "IsAccepted"),
+                                GotInterview = DbUtils.GetString(reader, "GotInterview"),
                                 ExperienceLevelId = DbUtils.GetInt(reader, "ExperienceLevelId"),
                                 ExperienceLevel = new ExperienceLevel()
                                 {
