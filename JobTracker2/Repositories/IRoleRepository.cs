@@ -9,5 +9,8 @@ namespace JobTracker2.Repositories
         void AddRole(Role role);
         void UpdateRole(Role role);
         void DeleteRole(int id);
+        List<ExperienceLevel> GetAllExpLevels();
+        List<JobType> GetAllJobTypes();
+        List<JobSite> GetAllJobSites();
     }
 }

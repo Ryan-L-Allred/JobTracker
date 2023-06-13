@@ -39,10 +39,10 @@ namespace JobTracker2.Controllers
         [HttpPost]
         public IActionResult Post(Role role)
         {
-            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userProfile = _userProfileRepo.GetByFirebaseUserId(firebaseUserId);
+            //var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //var userProfile = _userProfileRepo.GetByFirebaseUserId(firebaseUserId);
 
-            role.UserProfileId = userProfile.Id;
+            //role.UserProfileId = userProfile.Id;
             _roleRepo.AddRole(role);
             return CreatedAtAction("Get", new { id = role.Id }, role);
         }
@@ -64,6 +64,24 @@ namespace JobTracker2.Controllers
         {
             _roleRepo.DeleteRole(id);
             return NoContent();
+        }
+
+        [HttpGet("ExpLevel")]
+        public IActionResult GetExpLevels()
+        {
+            return Ok(_roleRepo.GetAllExpLevels());
+        }
+
+        [HttpGet("JobType")]
+        public IActionResult GetJobTypes()
+        {
+            return Ok(_roleRepo.GetAllJobTypes());
+        }
+
+        [HttpGet("JobSite")]
+        public IActionResult GetJobSites()
+        {
+            return Ok(_roleRepo.GetAllJobSites());
         }
     }
 }
