@@ -10,8 +10,7 @@
         public string IsRejected { get; set; }
         public string IsAccepted { get; set; }
         public string GotInterview { get; set; }
-        public int ExperienceLevelId { get; set; }
-        public ExperienceLevel ExperienceLevel { get; set; }
+
         public int JobTypeId { get; set; }
         public JobType JobType { get; set; }
         public int JobSiteId { get; set; }

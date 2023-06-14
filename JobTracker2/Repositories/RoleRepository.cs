@@ -5,7 +5,6 @@ using System.Linq;
 using Microsoft.Data.SqlClient;
 using System.Runtime.InteropServices;
 using Azure;
-using JobTracker2.Utils;
 
 namespace JobTracker2.Repositories
 {
@@ -21,12 +20,10 @@ namespace JobTracker2.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT r.Id, r.Title, r.Company, r.Location, r.Skills, r.IsRejected, r.IsAccepted, r.GotInterview, r.ExperienceLevelId, r.JobTypeId, r.JobSiteId, r.UserProfileId,
-	                           el.Name as ExpLevelName,
+                        SELECT r.Id, r.Title, r.Company, r.Location, r.Skills, r.IsRejected, r.IsAccepted, r.GotInterview, r.JobTypeId, r.JobSiteId, r.UserProfileId,
 	                           jt.Name as JobTypeName,
 	                           js.Name as JobSiteName
                          FROM Role r
-                         JOIN ExperienceLevel el ON r.ExperienceLevelId = el.Id
                          JOIN JobType jt ON r.JobTypeId = jt.Id
                          JOIN JobSite js ON r.JobSiteId = js.Id
                      ";
@@ -36,37 +33,31 @@ namespace JobTracker2.Repositories
                         var roles = new List<Role>();
                         while (reader.Read())
                         {
-                            roles.Add(new Role()
+                            var role = new Role()
                             {
-                                Id = DbUtils.GetInt(reader, "Id"),
-                                Title = DbUtils.GetString(reader, "Title"),
-                                Company = DbUtils.GetString(reader, "Company"),
-                                Location = DbUtils.GetString(reader, "Location"),
-                                Skills = DbUtils.GetString(reader, "Skills"),
-                                IsRejected = DbUtils.GetString(reader, "IsRejected"),
-                                IsAccepted = DbUtils.GetString(reader, "IsAccepted"),
-                                GotInterview = DbUtils.GetString(reader, "GotInterview"),
-                                ExperienceLevelId = DbUtils.GetInt(reader, "ExperienceLevelId"),
-                                ExperienceLevel = new ExperienceLevel()
-                                {
-                                    Id = DbUtils.GetInt(reader, "ExperienceLevelId"),
-                                    Name = DbUtils.GetString(reader, "ExpLevelName"),
-                                },
-                                JobTypeId = DbUtils.GetInt(reader, "JobTypeId"),
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Company = reader.GetString(reader.GetOrdinal("Company")),
+                                Location = reader.GetString(reader.GetOrdinal("Location")),
+                                Skills = reader.GetString(reader.GetOrdinal("Skills")),
+                                IsRejected = reader.GetString(reader.GetOrdinal("IsRejected")),
+                                IsAccepted = reader.GetString(reader.GetOrdinal("IsAccepted")),
+                                GotInterview = reader.GetString(reader.GetOrdinal("GotInterview")),
+                                JobTypeId = reader.GetInt32(reader.GetOrdinal("JobTypeId")),
                                 JobType = new JobType()
                                 {
-                                    Id = DbUtils.GetInt(reader, "JobTypeId"),
-                                    Name = DbUtils.GetString(reader, "JobTypeName")
+                                    Id = reader.GetInt32(reader.GetOrdinal("JobTypeId")),
+                                    Name = reader.GetString(reader.GetOrdinal("JobTypeName"))
                                 },
-                                JobSiteId = DbUtils.GetInt(reader, "JobSiteId"),
+                                JobSiteId = reader.GetInt32(reader.GetOrdinal("JobSiteId")),
                                 JobSite = new JobSite()
                                 {
-                                    Id = DbUtils.GetInt(reader, "JobSiteId"),
-                                    Name = DbUtils.GetString(reader, "JobSiteName")
+                                    Id = reader.GetInt32(reader.GetOrdinal("JobSiteId")),
+                                    Name = reader.GetString(reader.GetOrdinal("JobSiteName"))
                                 },
-                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId")
-                            });
-
+                                UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId"))
+                            };
+                            roles.Add(role);
                         }
 
                         return roles;
@@ -83,17 +74,15 @@ namespace JobTracker2.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT r.Id, r.Title, r.Company, r.Location, r.Skills, r.IsRejected, r.IsAccepted, r.GotInterview, r.ExperienceLevelId, r.JobTypeId, r.JobSiteId, r.UserProfileId,
-	                             el.Name as ExpLevelName,
+                          SELECT r.Id, r.Title, r.Company, r.Location, r.Skills, r.IsRejected, r.IsAccepted, r.GotInterview, r.JobTypeId, r.JobSiteId, r.UserProfileId,
 	                             jt.Name as JobTypeName,
 	                             js.Name as JobSiteName
                             FROM Role r
-                            JOIN ExperienceLevel el ON r.ExperienceLevelId = el.Id
                             JOIN JobType jt ON r.JobTypeId = jt.Id
                             JOIN JobSite js ON r.JobSiteId = js.Id
                            WHERE r.Id = @Id";
 
-                    DbUtils.AddParameter(cmd, "@Id", id);
+                    cmd.Parameters.AddWithValue("@id", id);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -102,33 +91,27 @@ namespace JobTracker2.Repositories
                         {
                             role = new Role()
                             {
-                                Id = id,
-                                Title = DbUtils.GetString(reader, "Title"),
-                                Company = DbUtils.GetString(reader, "Company"),
-                                Location = DbUtils.GetString(reader, "Location"),
-                                Skills = DbUtils.GetString(reader, "Skills"),
-                                IsRejected = DbUtils.GetString(reader, "IsRejected"),
-                                IsAccepted = DbUtils.GetString(reader, "IsAccepted"),
-                                GotInterview = DbUtils.GetString(reader, "GotInterview"),
-                                ExperienceLevelId = DbUtils.GetInt(reader, "ExperienceLevelId"),
-                                ExperienceLevel = new ExperienceLevel()
-                                {
-                                    Id = DbUtils.GetInt(reader, "ExperienceLevelId"),
-                                    Name = DbUtils.GetString(reader, "ExpLevelName"),
-                                },
-                                JobTypeId = DbUtils.GetInt(reader, "JobTypeId"),
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Company = reader.GetString(reader.GetOrdinal("Company")),
+                                Location = reader.GetString(reader.GetOrdinal("Location")),
+                                Skills = reader.GetString(reader.GetOrdinal("Skills")),
+                                IsRejected = reader.GetString(reader.GetOrdinal("IsRejected")),
+                                IsAccepted = reader.GetString(reader.GetOrdinal("IsAccepted")),
+                                GotInterview = reader.GetString(reader.GetOrdinal("GotInterview")),
+                                JobTypeId = reader.GetInt32(reader.GetOrdinal("JobTypeId")),
                                 JobType = new JobType()
                                 {
-                                    Id = DbUtils.GetInt(reader, "JobTypeId"),
-                                    Name = DbUtils.GetString(reader, "JobTypeName")
+                                    Id = reader.GetInt32(reader.GetOrdinal("JobTypeId")),
+                                    Name = reader.GetString(reader.GetOrdinal("JobTypeName"))
                                 },
-                                JobSiteId = DbUtils.GetInt(reader, "JobSiteId"),
+                                JobSiteId = reader.GetInt32(reader.GetOrdinal("JobSiteId")),
                                 JobSite = new JobSite()
                                 {
-                                    Id = DbUtils.GetInt(reader, "JobSiteId"),
-                                    Name = DbUtils.GetString(reader, "JobSiteName")
+                                    Id = reader.GetInt32(reader.GetOrdinal("JobSiteId")),
+                                    Name = reader.GetString(reader.GetOrdinal("JobSiteName"))
                                 },
-                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId")
+                                UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId"))
                             };
                         }
 
@@ -146,21 +129,20 @@ namespace JobTracker2.Repositories
                 using(var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO Role (Title, Company, Location, Skills, IsRejected, IsAccepted, GotInterview, ExperienceLevelId, JobTypeId, JobSiteId, UserProfileId)
+                        INSERT INTO Role (Title, Company, Location, Skills, IsRejected, IsAccepted, GotInterview, JobTypeId, JobSiteId, UserProfileId)
                         OUTPUT INSERTED.ID
-                        VALUES (@Title, @Company, @Location, @Skills, @IsRejected, @IsAccepted, @GotInterview, @ExperienceLevelId, @JobTypeId, @JobSiteId, @UserProfileId)";
+                        VALUES (@Title, @Company, @Location, @Skills, @IsRejected, @IsAccepted, @GotInterview, @JobTypeId, @JobSiteId, @UserProfileId)";
 
-                    DbUtils.AddParameter(cmd, "@Title", role.Title);
-                    DbUtils.AddParameter(cmd, "@Company", role.Company);
-                    DbUtils.AddParameter(cmd, "@Location", role.Location);
-                    DbUtils.AddParameter(cmd, "@Skills", role.Skills);
-                    DbUtils.AddParameter(cmd, "@IsRejected", role.IsRejected);
-                    DbUtils.AddParameter(cmd, "@IsAccepted", role.IsAccepted);
-                    DbUtils.AddParameter(cmd, "@GotInterview", role.GotInterview);
-                    DbUtils.AddParameter(cmd, "@ExperienceLevelId", role.ExperienceLevelId);
-                    DbUtils.AddParameter(cmd, "@JobTypeId", role.JobTypeId);
-                    DbUtils.AddParameter(cmd, "@JobSiteId", role.JobSiteId);
-                    DbUtils.AddParameter(cmd, "@UserProfileId", role.UserProfileId);
+                    cmd.Parameters.AddWithValue("@Title", role.Title);
+                    cmd.Parameters.AddWithValue("@Company", role.Company);
+                    cmd.Parameters.AddWithValue("@Location", role.Location);
+                    cmd.Parameters.AddWithValue("@Skills", role.Skills);
+                    cmd.Parameters.AddWithValue("@IsRejected", role.IsRejected);
+                    cmd.Parameters.AddWithValue("@IsAccepted", role.IsAccepted);
+                    cmd.Parameters.AddWithValue("@GotInterview", role.GotInterview);
+                    cmd.Parameters.AddWithValue("@JobTypeId", role.JobTypeId);
+                    cmd.Parameters.AddWithValue("@JobSiteId", role.JobSiteId);
+                    cmd.Parameters.AddWithValue("@UserProfileId", role.UserProfileId);
 
                     role.Id = (int)cmd.ExecuteScalar();
                 }
@@ -183,24 +165,22 @@ namespace JobTracker2.Repositories
                                IsRejected = @IsRejected,
                                IsAccepted = @IsAccepted,
                                GotInterview = @GotInterview,
-                               ExperienceLevelId = @ExperienceLevelId,
                                JobTypeId = @JobTypeId,
                                JobSiteId = @JobSiteId,
                                UserProfileId = @UserProfileId
                          WHERE Id = @Id";
 
-                    DbUtils.AddParameter(cmd, "@Title", role.Title);
-                    DbUtils.AddParameter(cmd, "@Company", role.Company);
-                    DbUtils.AddParameter(cmd, "@Location", role.Location);
-                    DbUtils.AddParameter(cmd, "@Skills", role.Skills);
-                    DbUtils.AddParameter(cmd, "@IsRejected", role.IsRejected);
-                    DbUtils.AddParameter(cmd, "@IsAccepted", role.IsAccepted);
-                    DbUtils.AddParameter(cmd, "@GotInterview", role.GotInterview);
-                    DbUtils.AddParameter(cmd, "@ExperienceLevelId", role.ExperienceLevelId);
-                    DbUtils.AddParameter(cmd, "@JobTypeId", role.JobTypeId);
-                    DbUtils.AddParameter(cmd, "@JobSiteId", role.JobSiteId);
-                    DbUtils.AddParameter(cmd, "@UserProfileId", role.UserProfileId);
-                    DbUtils.AddParameter(cmd, "@Id", role.Id);
+                    cmd.Parameters.AddWithValue("@Title", role.Title);
+                    cmd.Parameters.AddWithValue("@Company", role.Company);
+                    cmd.Parameters.AddWithValue("@Location", role.Location);
+                    cmd.Parameters.AddWithValue("@Skills", role.Skills);
+                    cmd.Parameters.AddWithValue("@IsRejected", role.IsRejected);
+                    cmd.Parameters.AddWithValue("@IsAccepted", role.IsAccepted);
+                    cmd.Parameters.AddWithValue("@GotInterview", role.GotInterview);
+                    cmd.Parameters.AddWithValue("@JobTypeId", role.JobTypeId);
+                    cmd.Parameters.AddWithValue("@JobSiteId", role.JobSiteId);
+                    cmd.Parameters.AddWithValue("@UserProfileId", role.UserProfileId);
+                    cmd.Parameters.AddWithValue("@Id", role.Id);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -215,37 +195,8 @@ namespace JobTracker2.Repositories
                 using(var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = "DELETE FROM Role WHERE Id = @id";
-                    DbUtils.AddParameter(cmd, "@id", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
                     cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public List<ExperienceLevel> GetAllExpLevels()
-        {
-            using (var conn = Connection)
-            {
-                conn.Open();
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                            SELECT Id, [Name]
-                              FROM ExperienceLevel";
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        var expLevels = new List<ExperienceLevel>();
-                        while (reader.Read())
-                        {
-                            expLevels.Add(new ExperienceLevel()
-                            {
-                                Id = DbUtils.GetInt(reader, "Id"),
-                                Name = DbUtils.GetString(reader, "Name")
-                            });
-                        }
-
-                        return expLevels;
-                    }
                 }
             }
         }
@@ -266,11 +217,12 @@ namespace JobTracker2.Repositories
                         var jobTypes = new List<JobType>();
                         while (reader.Read())
                         {
-                            jobTypes.Add(new JobType()
+                            var jobType = new JobType()
                             {
-                                Id = DbUtils.GetInt(reader, "Id"),
-                                Name = DbUtils.GetString(reader, "Name")
-                            });
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name"))
+                            };
+                            jobTypes.Add(jobType);
                         }
 
                         return jobTypes;
@@ -295,11 +247,12 @@ namespace JobTracker2.Repositories
                         var jobSites = new List<JobSite>();
                         while (reader.Read())
                         {
-                            jobSites.Add(new JobSite()
+                            var jobSite = new JobSite()
                             {
-                                Id = DbUtils.GetInt(reader, "Id"),
-                                Name = DbUtils.GetString(reader, "Name")
-                            });
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name"))
+                            };
+                            jobSites.Add(jobSite);
                         }
 
                         return jobSites;

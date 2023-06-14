@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using JobTracker2.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobTracker2.Controllers
 {
@@ -47,6 +48,7 @@ namespace JobTracker2.Controllers
             return CreatedAtAction("Get", new { id = role.Id }, role);
         }
 
+        
         [HttpPut]
         public IActionResult Put(int id, Role role)
         {
@@ -59,6 +61,7 @@ namespace JobTracker2.Controllers
             return NoContent();
         }
 
+        
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -66,18 +69,14 @@ namespace JobTracker2.Controllers
             return NoContent();
         }
 
-        [HttpGet("ExpLevel")]
-        public IActionResult GetExpLevels()
-        {
-            return Ok(_roleRepo.GetAllExpLevels());
-        }
-
+        
         [HttpGet("JobType")]
         public IActionResult GetJobTypes()
         {
             return Ok(_roleRepo.GetAllJobTypes());
         }
 
+        
         [HttpGet("JobSite")]
         public IActionResult GetJobSites()
         {

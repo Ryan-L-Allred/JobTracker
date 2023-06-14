@@ -2,32 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Card, CardBody } from "reactstrap";
-import { addRole } from "../modules/roleManager";
-import { getAllExpLevels, getAllJobSites, getAllJobTypes } from '../modules/propertyManager';
+import { addRole, getAllExpLevels, getAllJobSites, getAllJobTypes } from "../modules/roleManager";
+
 
 const RoleForm = ({ getRoles }) => {
     const emptyRole = {
         title: '',
         company: '',
+        location: '',
         skills: '',
         isRejected: '',
         isAccepted: '',
         gotInterview: '',
-        experienceLevelId: 0,
-        jobTypeId: 0,
-        jobSiteId: 0
+        jobTypeId: 1,
+        jobSiteId: 1
     }
     const [role, setRole] = useState(emptyRole);
-
-    const [expLevels, setExpLevels] = useState([])
-
-    const getExpLevels = () => {
-        getAllExpLevels().then(expLevels => setExpLevels(expLevels))
-    }
-
-    useEffect(() => {
-        getExpLevels()
-    }, [])
 
     const [jobTypes, setJobTypes] = useState([])
 
@@ -83,12 +73,12 @@ const RoleForm = ({ getRoles }) => {
           value={role.company}
           onChange={handleInputChange} />
       </FormGroup>
-      <FormGroup>
+       {/* <FormGroup>
         <div class="Location" for="Location">Location</div>
         <Input type="text" name="Location" id="Location" placeholder="Location"
           value={role.location}
           onChange={handleInputChange} />
-      </FormGroup>
+      </FormGroup>  */}
       <FormGroup>
         <div class="skills" for="skills">skills</div>
         <Input type="text" name="skills" id="skills" placeholder="skills"
@@ -112,29 +102,6 @@ const RoleForm = ({ getRoles }) => {
         <Input type="text" name="gotInterview" id="gotInterview" placeholder="gotInterview"
           value={role.gotInterview}
           onChange={handleInputChange} />
-      </FormGroup>
-      <FormGroup>
-        <div for="expLevel">Experience Level</div>
-        <select
-            className="experienceLevel-box"
-            id="experienceLevel-select"
-            onChange={
-              (evt) => {
-                const copy = { ...role }
-                copy.experienceLevelId = evt.target.value
-                setRole(copy)
-              }}
-            >
-            <option value="0">Select One</option>
-            {expLevels.map((expLevel) => {
-              return (
-                <option key={expLevel.id}
-                        value={expLevel.id}>
-                        {expLevel.name}
-                        </option>
-              )
-            })}
-        </select>
       </FormGroup>
       <FormGroup>
         <div for="jobType">Job Type</div>
