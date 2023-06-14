@@ -1,5 +1,8 @@
 import { getToken } from "./authManager";
 const baseUrl = '/api/role';
+const expLevelUrl = '/api/role/explevel';
+const jobTypeUrl = '/api/role/jobtype';
+const jobSiteUrl = '/api/role/jobsite';
 
 export const getAllRoles = () => {
     return getToken().then((token) => {
@@ -61,4 +64,42 @@ export const getRoleById = (id) => {
           }
         });
       });
+};
+
+export const getAllJobTypes = () => {
+  return getToken().then((token) => {
+      return fetch(jobTypeUrl, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          throw new Error(
+            "An unknown error occurred while trying to get job types.",
+          );
+        }
+      });
+    });
+};
+
+export const getAllJobSites = () => {
+  return getToken().then((token) => {
+      return fetch(jobSiteUrl, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          throw new Error(
+            "An unknown error occurred while trying to get job sites.",
+          );
+        }
+      });
+    });
 };

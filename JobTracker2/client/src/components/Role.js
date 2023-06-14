@@ -19,7 +19,6 @@ const Role = ({ role }) => {
                         <li><b>Rejected:</b> {role.isRejected}</li>
                         <li><b>Accepted:</b> {role.isAccepted}</li>
                         <li><b>Interview:</b> {role.gotInterview}</li>
-                        <li><b>Experience Level:</b> {role?.experienceLevel?.name}</li>
                         <li><b>JobType:</b> {role?.jobType?.name}</li>
                         <li><b>Job Site:</b> {role?.jobSite?.name}</li>
                     </ul>
